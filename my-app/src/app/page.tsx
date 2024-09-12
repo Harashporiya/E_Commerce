@@ -5,8 +5,8 @@ import { redirect } from 'next/navigation'
 import HeaderPage from './(client)/header/page'
 
 const page = async() => {
-  const session = await auth()
-  if(session?.user) redirect("/home")
+  // const session = await auth()
+  // if(session?.user) redirect("/home")
   return (
     <div >
       <HeaderPage/>
