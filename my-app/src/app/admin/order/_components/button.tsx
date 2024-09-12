@@ -29,7 +29,7 @@ const DownHeader = () => {
                   Archived
                 </TabsTrigger>
               </TabsList> */}
-              <p className='text-3xl text-black font-bold'>Product</p>
+              <p className='text-3xl text-black font-bold'>Orders</p>
               <div className="ml-auto flex items-center gap-2">
                 {/* <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -58,12 +58,12 @@ const DownHeader = () => {
                     Export
                   </span>
                 </Button> */}
-                <Button size="sm" className="h-8 gap-1">
+                {/* <Button size="sm" className="h-8 gap-1">
                   <PlusCircle className="h-3.5 w-3.5" />
-                  <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                  {/* <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                     Add Product
-                  </span>
-                </Button>
+                  </span> */}
+                {/* </Button>  */}
               </div>
             </div>
     </div>

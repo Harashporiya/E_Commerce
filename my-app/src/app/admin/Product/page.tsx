@@ -37,6 +37,8 @@ import DownHeader from "../_components/downHeader"
 
 
 const Dashboard=()=> {
+
+  
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-white">
       <SideHeader/>
@@ -48,10 +50,6 @@ const Dashboard=()=> {
             <TabsContent value="all">
               <Card x-chunk="dashboard-06-chunk-0">
                 <CardHeader>
-                  <CardTitle>Products</CardTitle>
-                  <CardDescription>
-                    Manage your products and view their sales performance.
-                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Table>
@@ -61,7 +59,7 @@ const Dashboard=()=> {
                           <span className="sr-only">Image</span>
                         </TableHead>
                         <TableHead>Name</TableHead>
-                        <TableHead>Status</TableHead>
+                     
                         <TableHead className="hidden md:table-cell">
                           Price
                         </TableHead>
@@ -90,9 +88,7 @@ const Dashboard=()=> {
                         <TableCell className="font-medium">
                           Laser Lemonade Machine
                         </TableCell>
-                        <TableCell>
-                          <Badge variant="outline">Draft</Badge>
-                        </TableCell>
+                     
                         <TableCell className="hidden md:table-cell">
                           $499.99
                         </TableCell>
