@@ -1,15 +1,13 @@
-import Image from "next/image"
-import { MoreHorizontal,} from "lucide-react"
+"use client"
+// import Image from "next/image"
+import { MoreHorizontal } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
-
 import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 import {
   DropdownMenu,
@@ -34,23 +32,36 @@ import {
 import SideHeader from "../_components/sideheader"
 import Header from "../_components/header"
 import DownHeader from "../_components/downHeader"
+import { useEffect, useState } from "react"
+import { productAll } from "@/http/api"
 
-
-const Dashboard=()=> {
-
+const Dashboard = () => {
+  const [products, setProducts] = useState([]) 
   
+  useEffect(() => {
+    const productFetchData = async () => {
+      try {
+        const response = await productAll()
+        console.log(response.data.productsAll)
+        setProducts(response.data.productsAll) 
+      } catch (error) {
+        console.log("error", error)
+      }
+    }
+    productFetchData()
+  }, []) 
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-white">
-      <SideHeader/>
+      <SideHeader />
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-       <Header/>
+        <Header />
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
           <Tabs defaultValue="all">
-           <DownHeader/>
+            <DownHeader />
             <TabsContent value="all">
               <Card x-chunk="dashboard-06-chunk-0">
-                <CardHeader>
-                </CardHeader>
+                <CardHeader />
                 <CardContent>
                   <Table>
                     <TableHeader>
@@ -59,12 +70,13 @@ const Dashboard=()=> {
                           <span className="sr-only">Image</span>
                         </TableHead>
                         <TableHead>Name</TableHead>
-                     
+                        <TableHead>Brand name</TableHead>
+                        <TableHead className="hidden md:table-cell">  Price</TableHead>
                         <TableHead className="hidden md:table-cell">
-                          Price
+                          Size
                         </TableHead>
                         <TableHead className="hidden md:table-cell">
-                          Total Sales
+                          Gender
                         </TableHead>
                         <TableHead className="hidden md:table-cell">
                           Created at
@@ -75,58 +87,55 @@ const Dashboard=()=> {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      <TableRow>
-                        <TableCell className="hidden sm:table-cell">
-                          <Image
-                            alt="Product image"
-                            className="aspect-square rounded-md object-cover"
-                            height="64"
-                            src="/placeholder.svg"
-                            width="64"
-                          />
-                        </TableCell>
-                        <TableCell className="font-medium">
-                          Laser Lemonade Machine
-                        </TableCell>
-                     
-                        <TableCell className="hidden md:table-cell">
-                          $499.99
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          25
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          2023-07-12 10:42 AM
-                        </TableCell>
-                        <TableCell>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button
-                                aria-haspopup="true"
-                                size="icon"
-                                variant="ghost"
-                              >
-                                <MoreHorizontal className="h-4 w-4" />
-                                <span className="sr-only">Toggle menu</span>
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                              <DropdownMenuItem>Edit</DropdownMenuItem>
-                              <DropdownMenuItem>Delete</DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </TableCell>
-                      </TableRow>
+                      {products.map((product: any) => (
+                        <TableRow key={product._id}>
+                          <TableCell className="hidden w-[100px] sm:table-cell">
+                            {/* <Image
+                              src={`/assets/${product.image}`}
+                              alt={product.name}
+                              width={50}
+                              height={50}
+                              className="rounded-md"
+                            /> */}
+                          </TableCell>
+                          <TableCell>{product.name}</TableCell>
+                          <TableCell>{product.brandName}</TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            ${product.prise}
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                          {product.size}
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                          {product.option}
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            {new Date(product.createdAt).toLocaleDateString()}
+                          </TableCell>
+                          <TableCell>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button
+                                  aria-haspopup="true"
+                                  size="icon"
+                                  variant="ghost"
+                                >
+                                  <MoreHorizontal className="h-4 w-4" />
+                                  <span className="sr-only">Toggle menu</span>
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                <DropdownMenuItem>Edit</DropdownMenuItem>
+                                <DropdownMenuItem>Delete</DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
+                        </TableRow>
+                      ))}
                     </TableBody>
                   </Table>
                 </CardContent>
-                {/* <CardFooter>
-                  <div className="text-xs text-muted-foreground">
-                    Showing <strong>1-10</strong> of <strong>32</strong>{" "}
-                    products
-                  </div>
-                </CardFooter> */}
               </Card>
             </TabsContent>
           </Tabs>
@@ -135,4 +144,5 @@ const Dashboard=()=> {
     </div>
   )
 }
+
 export default Dashboard
