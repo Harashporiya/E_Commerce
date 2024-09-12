@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 
 const orderSchema = new Schema({
     address: {
@@ -25,6 +25,6 @@ const orderSchema = new Schema({
     }
 }, { timestamps: true });
 
-const Order = model("Order", orderSchema);
+const Order = models.Order || model("Order", orderSchema);
 
 export default Order;
