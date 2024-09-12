@@ -71,3 +71,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "Failed to save the file system" }, { status: 500 });
   }
 }
+
+export async function GET(){
+  await connectToDataBase()
+   try {
+    const productsAll = await Product.find();
+    return NextResponse.json({productsAll,message:"All product fetch"},{status:200})
+   } catch (error) {
+    return NextResponse.json({message:"Product are not fetch failed"},{status:500})
+   }
+}

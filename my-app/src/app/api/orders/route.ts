@@ -58,11 +58,9 @@ export async function POST(request: Request) {
 }
 
 export async function GET(){
-    
-    
      await connectToDataBase()
      try {
-       const order = await Order.find().populate({path:'userId',select:['firstName','lastName']}).populate({path:'productId',select:['name','prise']})
+       const order = await Order.find().populate({path:'userId',select:['firstName','lastName']}).populate({path:'productId',select:['name','prise','brandName','description','size','option']})
        
        if (!order) {
            return NextResponse.json({ message: "Order not found" },{status:404});
@@ -71,4 +69,4 @@ export async function GET(){
      } catch (error) {
        return NextResponse.json({message:"Falied the fetch data"},{status:404})
      }
-   }
+ }
