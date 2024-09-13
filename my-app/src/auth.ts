@@ -49,24 +49,24 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   pages:{
     signIn:'/signin',
   },
-  callbacks:{
-    signIn:async({user, account})=>{
-      if(account?.provider === 'google'){
-        try {
-            const {email,name,id} = user
-            await connectToDataBase()
+//   callbacks:{
+//     signIn:async({user, account})=>{
+//       if(account?.provider === 'google'){
+//         try {
+//             const {email,name,id} = user
+//             await connectToDataBase()
 
-            const aleaduser = await User.findOne({email})
-            if(!aleaduser){
-                await User.create({email,name,googleId:id});
+//             const aleaduser = await User.findOne({email})
+//             if(!aleaduser){
+//                 await User.create({email,name,googleId:id});
 
-            }
-            return true;
-        } catch (error) {
-            throw new AuthError("Error while creating user")
-        }
-      }
-      return false;
-    }
-  }
+//             }
+//             return true;
+//         } catch (error) {
+//             throw new AuthError("Error while creating user")
+//         }
+//       }
+//       return false;
+//     }
+//   }
 })
