@@ -29,10 +29,10 @@ const  SignupForm=()=> {
     }
   };
 
-  return (<div className="flex items-center min-h-screen bg-gray-600">
-    <Card className="mx-auto w-full max-w-sm bg-gray-300">
+  return (<div className="flex items-center min-h-screen bg-black">
+    <Card className="mx-auto w-full max-w-sm rounded-3xl bg-black border-[1px] border-gray-200">
       <CardHeader>
-        <CardTitle className="text-xl">Sign Up</CardTitle>
+        <CardTitle className="text-xl text-white">Sign Up</CardTitle>
         <CardDescription>
           Enter your information to create an account
         </CardDescription>
@@ -42,37 +42,38 @@ const  SignupForm=()=> {
         <div className="grid gap-4">
           <div className="grid  gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="first-name">First name</Label>
-              <Input id="first-name" placeholder="Jhon" name="firstName" required />
+              <Label htmlFor="first-name" className="text-white font-sans">First name</Label>
+              <Input id="first-name" className="flex h-10 w-full border-none bg-[#27272a] text-white font-sans" placeholder="Jhon" name="firstName" required />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="last-name">Last name</Label>
-              <Input id="last-name" name="lastName" placeholder="Robinson" required />
+              <Label htmlFor="last-name" className="text-white font-sans">Last name</Label>
+              <Input id="last-name" name="lastName" placeholder="Robinson" className="flex h-10 w-full border-none bg-[#27272a] text-white font-sans" required />
             </div>
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-white font-sans">Email</Label>
             <Input
               id="email"
               type="email"
               name="email"
               placeholder="m@example.com"
               required
+              className="flex h-10 w-full border-none bg-[#27272a] text-white font-sans"
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" name="password" required />
+            <Label htmlFor="password" className="text-white font-sans">Password</Label>
+            <Input id="password" type="password" placeholder=".................." name="password" className="flex h-10 w-full border-none bg-[#27272a] text-white font-sans" required />
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit"   className="w-full text-white bg-black border-[1px] font-sans">
             Create an account
           </Button>
-          <Button variant="outline" className="w-full">
+          <Button variant="outline"  className="w-full text-white font-sans">
             Sign up with Google
           </Button>
         </div>
         </form>
-        <div className="mt-4 text-center text-sm">
+        <div className="mt-4 text-center text-sm text-white">
           Already have an account?{" "}
           <Link href="/signin" className="underline">
             Sign in

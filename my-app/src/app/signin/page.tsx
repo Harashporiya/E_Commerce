@@ -47,10 +47,10 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex items-center min-h-screen bg-gray-200">
-      <Card className="mx-auto max-w-sm bg-gray-300">
+    <div className="flex items-center min-h-screen bg-black">
+      <Card className="mx-auto max-w-sm bg-black rounded-3xl">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl text-white">Login</CardTitle>
           <CardDescription>
             Enter your email below to login to your account
           </CardDescription>
@@ -59,22 +59,23 @@ const LoginForm = () => {
           <form onSubmit={handleSubmit}>
             <div className="grid gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-white font-sans">Email</Label>
                 <Input
                   id="email"
                   type="email"
                   placeholder="m@example.com"
                   name="email"
+                  className="flex h-10 w-full border-none bg-[#27272a] text-white font-sans"
                 />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password" className="text-white font-sans">Password</Label>
                   <Link href="#" className="ml-auto inline-block text-sm underline">
                     Forgot your password?
                   </Link>
                 </div>
-                <Input id="password" type="password" name="password" />
+                <Input id="password" type="password" placeholder="............." className="flex h-10 w-full border-none bg-[#27272a] text-white font-sans" name="password" />
               </div>
               <Button type="submit" className="w-full">
                 Login
@@ -82,14 +83,15 @@ const LoginForm = () => {
               <Button
                 type="button"
                 variant="outline"
-                className="w-full"
+                className="w-full text-white"
                 onClick={handleGoogleSignIn}
+                
               >
                 Login with Google
               </Button>
             </div>
           </form>
-          <div className="mt-4 text-center text-sm">
+          <div className="mt-4 text-center text-sm text-white">
             Don&apos;t have an account?{" "}
             <Link href="/signup" className="underline">
               Sign up
