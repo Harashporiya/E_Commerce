@@ -25,7 +25,7 @@ const SignupRoute = async (formData: FormData) => {
     email,
     password: hashedPassword,
   });
-  redirect("/signin");
+  redirect("/signup");
 };
 
 export default SignupRoute;
