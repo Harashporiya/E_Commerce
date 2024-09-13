@@ -8,7 +8,7 @@ import fs from "fs"
 
 const isServer = typeof window === 'undefined';
 
-const productSchema = z.object({
+export const productSchema = z.object({
   name: z.string( { message: "Product name is required" }).min(1),
   brandName: z.string().min(1, { message: "Brand name is required" }),
   prise: z
