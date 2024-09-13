@@ -1,18 +1,9 @@
 "use client"
-import { MoreHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
 } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -25,9 +16,25 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import SideHeader from "../_components/sideheader";
 import Header from "../_components/header";
 import DownHeader from "./_components/downheader";
+import { useEffect, useState } from "react";
+import { ordersAll } from "@/http/api";
 
 
 const Customers = () => {
+    const [customer, setCustomer] = useState([])
+    useEffect(()=>{
+        const fetchCustomer =async()=>{
+        try {
+           
+                const response = await ordersAll()
+                setCustomer(response.data.order)
+            }
+         catch (error) {
+            console.log("error",error)
+        }
+    }
+        fetchCustomer()
+    },[])
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-white">
       <SideHeader/>
@@ -45,6 +52,8 @@ const Customers = () => {
                       <TableRow>
                         <TableHead>Customer name</TableHead>
                         <TableHead>Email</TableHead>
+                        <TableHead>Address</TableHead>
+                        <TableHead>Phone no.</TableHead>
                         <TableHead>Created at</TableHead>
                         <TableHead>
                           <span className="sr-only">Actions</span>
@@ -52,7 +61,17 @@ const Customers = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                   
+                   {
+                    customer.map((customers:any)=>(
+                        <TableRow key={customers.id}>
+                          <TableCell>{customers.userId.firstName} {customers.userId.lastName}</TableCell>
+                          <TableCell>{customers.userId.email}</TableCell>
+                          <TableCell>{customers.address}</TableCell>
+                          <TableCell>{customers.phone}</TableCell>
+                          <TableCell>{new Date(customers.createdAt).toLocaleString()}</TableCell>
+                        </TableRow>
+                    ))
+                   }
                     </TableBody>
                   </Table>
                 </CardContent>

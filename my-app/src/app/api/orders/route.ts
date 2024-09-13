@@ -60,7 +60,7 @@ export async function POST(request: Request) {
 export async function GET(){
      await connectToDataBase()
      try {
-       const order = await Order.find().populate({path:'userId',select:['firstName','lastName']}).populate({path:'productId',select:['name','prise','brandName','description','size','option']})
+       const order = await Order.find().populate({path:'userId',select:['firstName','lastName','email']}).populate({path:'productId',select:['name','prise','brandName','description','size','option']})
        
        if (!order) {
            return NextResponse.json({ message: "Order not found" },{status:404});

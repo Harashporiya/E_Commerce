@@ -18,3 +18,8 @@ export const ordersAll = async()=>{
     const response = await api.get("/orders");
     return response
 }
+
+export const customerAll = async()=>{
+    const response = await api.get("customers");
+    return response;
+}
