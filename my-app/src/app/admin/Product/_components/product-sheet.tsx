@@ -15,8 +15,8 @@ import CreateProductForm from './createProduct'
 const ProductSheet = () => {
     const {isOpen, onClose}  =  newProduct()   
     return (
-        <div>
-            <Sheet open={isOpen} onOpenChange={onClose} >
+        <div className='overflow-x-scroll'>
+            <Sheet  open={isOpen} onOpenChange={onClose} >
               
                 <SheetContent className='min-w-[28rem] space-y-4 bg-[#171717]'>
                     <SheetHeader>

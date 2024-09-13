@@ -23,11 +23,11 @@ const productSchema = new Schema({
     },
     size: {
         type: String,
-        enum: ['S', 'M', 'L', 'XL', 'XXL']
+        // enum: ['S', 'M', 'L', 'XL', 'XXL']
     },
     option: {
         type: String,
-        enum: ["Men", "Women"]
+        // enum: ["Men", "Women"]
     }
 }, { timestamps: true });
 

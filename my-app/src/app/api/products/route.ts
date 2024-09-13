@@ -1,20 +1,17 @@
 import { connectToDataBase } from "@/lib/db/db";
-import { writeFile, } from "fs/promises";
+import { writeFile, } from "node:fs/promises";
 import { NextResponse } from "next/server";
-import path from "path";
+import path from "node:path";
 import Product from "@/lib/model/products"; 
 import { z } from "zod";
-import fs from "fs"
+import fs from "node:fs"
 
 const isServer = typeof window === 'undefined';
 
 export const productSchema = z.object({
   name: z.string( { message: "Product name is required" }).min(1),
   brandName: z.string().min(1, { message: "Brand name is required" }),
-  prise: z
-    .string()
-    .transform((val) => parseFloat(val))
-    .refine((val) => !isNaN(val) && val > 0, { message: "Price must be a positive number" }),
+  prise: z.number({ message: "Price must be a positive number" }),
   description: z.string().min(1, { message: "Description is required" }),
   image: z.instanceof(isServer ? File : FileList, { message: "Image must be a valid file" }),
   size: z.enum(['S', 'M', 'L', 'XL', 'XXL'], { message: "Invalid size" }),
@@ -29,7 +26,7 @@ export async function POST(request: Request) {
     productSchema.parse({
       name: data.get("name"),
       brandName: data.get("brandName"),
-      prise: data.get("prise"),
+      prise: Number(data.get("prise")),
       description: data.get("description"),
       image: data.get("image"),
       size: data.get("size"),

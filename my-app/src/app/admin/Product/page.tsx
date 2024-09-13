@@ -101,7 +101,7 @@ const Dashboard = () => {
                           <TableCell>{product.name}</TableCell>
                           <TableCell>{product.brandName}</TableCell>
                           <TableCell className="hidden md:table-cell">
-                            ${product.prise}
+                            {product.prise}$
                           </TableCell>
                           <TableCell className="hidden md:table-cell">
                           {product.size}
