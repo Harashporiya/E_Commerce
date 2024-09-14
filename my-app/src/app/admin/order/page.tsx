@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image"
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -60,6 +61,9 @@ const Dashboard = () => {
                   <Table>
                     <TableHeader>
                       <TableRow>
+                      <TableHead className="hidden w-[100px] sm:table-cell">
+                          <span className="sr-only">Image</span>
+                        </TableHead>
                         <TableHead>Product Name</TableHead>
                         <TableHead>Brand</TableHead>
                         <TableHead>Quantity</TableHead>
@@ -78,10 +82,21 @@ const Dashboard = () => {
                     <TableBody>
                       {orders.map((order: any) => (
                         <TableRow key={order._id}>
+                           <TableCell className="hidden w-[100px] sm:table-cell">
+                            <Image
+                              src={`${order.productId.image}`}
+                              alt=''
+                              width={0}
+                              height={0}
+                              sizes="100vw"
+                              style={{ width: '100%' }}
+                              className="aspect-square rounded-t-md object-cover shadow-lg hover:cursor-pointer"
+                            />
+                          </TableCell>
                           <TableCell>{order.productId.name}</TableCell>
                           <TableCell>{order.productId.brandName}</TableCell>
                           <TableCell>{order.qty}</TableCell>
-                          <TableCell>{order.productId.prise}</TableCell>
+                          <TableCell>{order.productId.prise}$</TableCell>
                           <TableCell>{order.productId.size}</TableCell>
                           <TableCell>{order.productId.option}</TableCell>
                           <TableCell>{`${order.userId.firstName} ${order.userId.lastName}`}</TableCell>

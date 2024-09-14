@@ -1,5 +1,5 @@
 "use client"
-// import Image from "next/image"
+import Image from "next/image"
 import { MoreHorizontal } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -34,6 +34,7 @@ import Header from "../_components/header"
 import DownHeader from "../_components/downHeader"
 import { useEffect, useState } from "react"
 import { productAll } from "@/http/api"
+import { ProductType } from "@/types/productTypes"
 
 const Dashboard = () => {
   const [products, setProducts] = useState([]) 
@@ -87,16 +88,18 @@ const Dashboard = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {products.map((product: any) => (
-                        <TableRow key={product._id}>
+                      {products.map((product: ProductType) => (
+                        <TableRow key={product.id}>
                           <TableCell className="hidden w-[100px] sm:table-cell">
-                            {/* <Image
-                              src={`/assets/${product.image}`}
-                              alt={product.name}
-                              width={50}
-                              height={50}
-                              className="rounded-md"
-                            /> */}
+                            <Image
+                              src={`${product.image}`}
+                              alt=''
+                              width={0}
+                              height={0}
+                              sizes="100vw"
+                              style={{ width: '100%' }}
+                              className="aspect-square rounded-t-md object-cover shadow-lg hover:cursor-pointer"
+                            />
                           </TableCell>
                           <TableCell>{product.name}</TableCell>
                           <TableCell>{product.brandName}</TableCell>
