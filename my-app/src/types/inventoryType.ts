@@ -1,4 +1,4 @@
-export interface inventoriesTpes{
+export interface inventoriesTypes{
     id:string;
     sku:string;
     productId:string;

@@ -19,7 +19,7 @@ import Header from "../_components/header";
 import DownHeader from "./_components/downheader";
 import { useEffect, useState } from "react";
 import { inventoryAddAll } from "@/http/api";
-import { inventoriesTpes } from "@/types/inventoryType";
+import { inventoriesTypes } from "@/types/inventoryType";
 
 const Customers = () => {
   const [inventory, setInventory]=useState([])
@@ -28,7 +28,7 @@ const Customers = () => {
       try {
         const response = await inventoryAddAll()
         setInventory(response.data.inventoryAll)
-        console.log(response.data)
+        // console.log(response.data)
       } catch (error) {
         console.log("Error",error);
       }

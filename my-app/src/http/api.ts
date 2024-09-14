@@ -28,3 +28,9 @@ export const inventoryAddAll = async()=>{
     const response = await api.get("/inventory");
     return response
 }
+export const CreateInventoryAdd = async(data:{sku:string,productId:string,inventory:string})=>{
+    // console.log(data);
+    const response = await api.post("/inventory",data);
+    console.log(response);
+    return response.data
+}
