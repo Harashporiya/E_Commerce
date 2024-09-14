@@ -23,3 +23,8 @@ export const customerAll = async()=>{
     const response = await api.get("customers");
     return response;
 }
+
+export const inventoryAddAll = async()=>{
+    const response = await api.get("/inventory");
+    return response
+}

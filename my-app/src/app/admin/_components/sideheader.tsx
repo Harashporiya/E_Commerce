@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from "next/link"
 import {
+  BlocksIcon,
   Home,
   LineChart,
   Package,
@@ -77,6 +78,18 @@ const SideHeader = () => {
               </Link>
             </TooltipTrigger>
             <TooltipContent side="right">Customers</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="/admin/inventories"
+                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+              >
+                <BlocksIcon/>
+                <span className="sr-only">Inventories</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Inventories</TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
