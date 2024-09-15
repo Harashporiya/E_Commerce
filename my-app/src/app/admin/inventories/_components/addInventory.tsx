@@ -43,12 +43,6 @@ const AddInventory = () => {
 
   const onSubmit = async (formData: FormValues) => {
     console.log(formData);
-    // const formData = new FormData();
-    // formData.append("sku", data.sku);
-    // formData.append("inventory", String(data.inventory));
-    // formData.append("productId", String(data.productId));
-
-    // console.log("data form wala" + formData);
     try {
       const response = await CreateInventoryAdd(formData);
       toast.success("Inventory created successfully");
@@ -64,7 +58,6 @@ const AddInventory = () => {
       try {
         const response = await productAll();
         setProduct(response.data.productsAll);
-       
       } catch (error) {
         console.log("error:", error);
       }

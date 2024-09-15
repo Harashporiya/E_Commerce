@@ -90,3 +90,19 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+@keyframes cyclicMotion {
+  0% {
+    transform: translateX(-100%); 
+  }
+  100% {
+    transform: translateX(100%); 
+  }
+}
+
+.animate-cyclicMotion {
+  animation: cyclicMotion 6s linear infinite;
+  display: flex;
+  width: 300%;
+}

@@ -30,7 +30,7 @@ const LoginForm = () => {
       } else {
         toast.success("Login successful");
         setTimeout(() => {
-          router.push("/home");
+          router.push("/");
         }, 2000);
       }
     } catch (error) {
