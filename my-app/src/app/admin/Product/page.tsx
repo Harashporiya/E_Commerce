@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import toast, { Toaster } from "react-hot-toast";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +14,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import {
   Dialog,
   DialogContent,
@@ -63,8 +74,10 @@ const Dashboard = () => {
     try {
       await deleteSingleProduct(id);
       setProducts(products.filter((product) => product._id !== id));
+      toast.success("Delete product successfull!");
     } catch (error) {
       console.error("Error deleting product:", error);
+      toast.error("No delete product!");
     }
   };
 
@@ -77,8 +90,10 @@ const Dashboard = () => {
         ),
       );
       setDialogOpen(false);
+      toast.success("Update product successfull!");
     } catch (error) {
       console.error("Error updating product:", error);
+      toast.error("Product not update!");
     }
   };
 
@@ -264,20 +279,30 @@ const Dashboard = () => {
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="size" className="text-right">
-                  Size
-                </Label>
-                <Input
-                  id="size"
+                <Select
                   value={selectedProduct.size}
-                  onChange={(e) =>
+                  onValueChange={(value) =>
                     setSelectedProduct({
                       ...selectedProduct,
-                      size: e.target.value,
+                      size: value,
                     })
                   }
-                  className="col-span-3"
-                />
+                >
+                  <Label>Size</Label>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select Size" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Size Select</SelectLabel>
+                      <SelectItem value="S">S</SelectItem>
+                      <SelectItem value="M">M</SelectItem>
+                      <SelectItem value="L">L</SelectItem>
+                      <SelectItem value="XL">XL</SelectItem>
+                      <SelectItem value="XXL">XXL</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
             <DialogFooter>
@@ -291,6 +316,7 @@ const Dashboard = () => {
           </DialogContent>
         </Dialog>
       )}
+      <Toaster />
     </div>
   );
 };

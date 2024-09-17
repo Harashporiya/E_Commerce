@@ -1,12 +1,8 @@
-"use client"
-import Image from "next/image"
+"use client";
+import Image from "next/image";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,7 +32,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await ordersAll();
-        setOrders(response.data.order); 
+        setOrders(response.data.order);
         console.log(response.data.order);
       } catch (error) {
         console.log("Error", error);
@@ -61,7 +57,7 @@ const Dashboard = () => {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                      <TableHead className="hidden w-[100px] sm:table-cell">
+                        <TableHead className="hidden w-[100px] sm:table-cell">
                           <span className="sr-only">Image</span>
                         </TableHead>
                         <TableHead>Product Name</TableHead>
@@ -82,14 +78,14 @@ const Dashboard = () => {
                     <TableBody>
                       {orders.map((order: any) => (
                         <TableRow key={order._id}>
-                           <TableCell className="hidden w-[100px] sm:table-cell">
+                          <TableCell className="hidden w-[100px] sm:table-cell">
                             <Image
                               src={`${order.productId.image}`}
-                              alt=''
+                              alt=""
                               width={0}
                               height={0}
                               sizes="100vw"
-                              style={{ width: '100%' }}
+                              style={{ width: "100%" }}
                               className="aspect-square rounded-t-md object-cover shadow-lg hover:cursor-pointer"
                             />
                           </TableCell>
@@ -102,24 +98,11 @@ const Dashboard = () => {
                           <TableCell>{`${order.userId.firstName} ${order.userId.lastName}`}</TableCell>
                           <TableCell>{order.phone}</TableCell>
                           <TableCell>{order.address}</TableCell>
-                          <TableCell>{new Date(order.createdAt).toLocaleString()}</TableCell>
                           <TableCell>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button aria-haspopup="true" size="icon" variant="ghost">
-                                  <MoreHorizontal className="h-4 w-4" />
-                                  <span className="sr-only">Toggle menu</span>
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem>Edit</DropdownMenuItem>
-                                <DropdownMenuItem>Delete</DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
+                            {new Date(order.createdAt).toLocaleString()}
                           </TableCell>
                         </TableRow>
-                            ))}
+                      ))}
                     </TableBody>
                   </Table>
                 </CardContent>
