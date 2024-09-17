@@ -24,7 +24,7 @@ const Customers = () => {
       try {
         const response = await inventoryAddAll();
         setInventory(response.data.inventoryAll);
-        // console.log(response.data)
+        console.log(response.data);
       } catch (error) {
         console.log("Error", error);
       }
@@ -61,7 +61,7 @@ const Customers = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {inventory.map((item: inventoriesTypes) => (
+                      {inventory.map((item: any) => (
                         <TableRow key={item.id}>
                           <TableCell className="hidden w-[100px] sm:table-cell">
                             <Image

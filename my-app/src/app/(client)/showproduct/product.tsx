@@ -1,58 +1,59 @@
 "use client";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { productAll } from "@/http/api";
 import { ProductType } from "@/types/productTypes";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
 
 const ShowProduct = () => {
   const [product, setProduct] = useState<ProductType[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await productAll();
         setProduct(response.data.productsAll);
-        setLoading(false);
-        // console.log(response.data.productsAll._id);
       } catch (err) {
-        setError("Failed to fetch products");
-        setLoading(false);
+        console.log("Failed to fetch products");
       }
     };
     fetchData();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-
   return (
-    <div className="grid grid-cols-4 p-10 space-y-1 justify-around space-x-10 bg-gray-200 min-h-screen">
-      {product.map((item: ProductType) => (
-        <div key={item._id} className="border-8  items-center border-black">
-          <img
-            src={item.image}
-            width={0}
-            height={0}
-            alt=""
-            style={{ width: 500, height: 500 }}
-            className="cursor-pointer"
-          />
-          <div className="bg-black p-2 cursor-pointer">
-            <p className="text-2xl text-white text-center font-serif">
-              {item.name}
-            </p>
-            <p className="text-2xl text-white text-center font-serif">
-              Pice: {item.prise}$
-            </p>
-            <Link href={`/product/${item._id}`}>
-              <Button className="w-full p-2 font-bold">Buy now</Button>
-            </Link>
-          </div>
+    <div className="bg-gray-100 min-h-screen py-12">
+      <div className="container mx-auto px-4">
+        <h1 className="text-4xl font-bold text-center mb-12 text-gray-800">
+          Our Products
+        </h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {product.map((item: ProductType) => (
+            <div
+              key={item._id}
+              className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105"
+            >
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-64 object-cover"
+              />
+              <div className="p-4">
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                  {item.name}
+                </h2>
+                <p className="text-2xl font-bold text-black mb-4">
+                  ${item.prise}
+                </p>
+                <Link href={`/product/${item._id}`}>
+                  <Button className="w-full bg-black hover:bg-gray-900 text-white font-bold py-2 px-4 rounded transition duration-300">
+                    Buy Now
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
     </div>
   );
 };

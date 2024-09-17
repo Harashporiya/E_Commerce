@@ -17,8 +17,8 @@ const HeaderPage = () => {
   const menuItems = ["New Arrivals", "Best Sellers", "Clearance", "View All"];
 
   return (
-    <header className="relative">
-      <div className="bg-black bg-opacity-80 backdrop-blur-md absolute top-0 left-0 w-full z-10">
+    <header>
+      <div className="bg-black bg-opacity-80 backdrop-blur-md ">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between mb-6">
             <Link href="/" className="flex items-center space-x-2">
@@ -87,13 +87,6 @@ const HeaderPage = () => {
             ))}
           </nav>
         </div>
-      </div>
-      <div className="h-screen">
-        <img
-          src="https://media1.thehungryjpeg.com/thumbs2/ori_3513922_280999654b9acc6a6e143612046c091cd5eeacab_fast-shopping-logo.jpg"
-          className="w-full h-full object-cover"
-          alt="Background Image"
-        />
       </div>
     </header>
   );
