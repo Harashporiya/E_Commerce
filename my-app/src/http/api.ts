@@ -43,3 +43,13 @@ export const SingleProduct = async (id: string) => {
   const response = await api.get(`/products/${id}`);
   return response;
 };
+
+export const deleteSingleProduct = async (id: string) => {
+  const response = await api.delete(`/products/delete/${id}`);
+  return response;
+};
+
+export const updateProduct = async (id: string) => {
+  const response = await api.put(`/products/update/${id}`);
+  return response;
+};

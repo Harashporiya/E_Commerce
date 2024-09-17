@@ -1,26 +1,30 @@
 import { connectToDataBase } from "@/lib/db/db";
-import { writeFile, } from "node:fs/promises";
+import { writeFile } from "node:fs/promises";
 import { NextResponse } from "next/server";
 import path from "node:path";
-import Product from "@/lib/model/products"; 
+import Product from "@/lib/model/products";
 import { z } from "zod";
-import fs from "node:fs"
+import fs from "node:fs";
 
-const isServer = typeof window === 'undefined';
+const isServer = typeof window === "undefined";
 
 export const productSchema = z.object({
-  name: z.string( { message: "Product name is required" }).min(1),
+  name: z.string({ message: "Product name is required" }).min(1),
   brandName: z.string().min(1, { message: "Brand name is required" }),
   prise: z.number({ message: "Price must be a positive number" }),
   description: z.string().min(1, { message: "Description is required" }),
-  image: z.instanceof(isServer ? File : FileList, { message: "Image must be a valid file" }),
-  size: z.enum(['S', 'M', 'L', 'XL', 'XXL'], { message: "Invalid size" }),
-  option: z.enum(["Men", "Women"], { message: "Option must be either 'Men' or 'Women'" })
+  image: z.instanceof(isServer ? File : FileList, {
+    message: "Image must be a valid file",
+  }),
+  size: z.enum(["S", "M", "L", "XL", "XXL"], { message: "Invalid size" }),
+  option: z.enum(["Men", "Women"], {
+    message: "Option must be either 'Men' or 'Women'",
+  }),
 });
 
 export async function POST(request: Request) {
   const data = await request.formData();
-  const image = data.get('image') as File;
+  const image = data.get("image") as File;
 
   try {
     productSchema.parse({
@@ -47,9 +51,8 @@ export async function POST(request: Request) {
     }
     await writeFile(filePath, buffer);
 
-    await connectToDataBase(); 
+    await connectToDataBase();
 
-    
     const newProduct = new Product({
       name: data.get("name"),
       brandName: data.get("brandName"),
@@ -60,21 +63,33 @@ export async function POST(request: Request) {
       option: data.get("option"),
     });
 
-    await newProduct.save(); 
+    await newProduct.save();
 
-    return NextResponse.json({ message: "Product created successfully!", product: newProduct }, { status: 200 });
+    return NextResponse.json(
+      { message: "Product created successfully!", product: newProduct },
+      { status: 200 },
+    );
   } catch (error) {
     console.error("Error saving file:", error);
-    return NextResponse.json({ message: "Failed to save the file system" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to save the file system" },
+      { status: 500 },
+    );
   }
 }
 
-export async function GET(){
-  await connectToDataBase()
-   try {
+export async function GET() {
+  await connectToDataBase();
+  try {
     const productsAll = await Product.find();
-    return NextResponse.json({productsAll,message:"All product fetch"},{status:200})
-   } catch (error) {
-    return NextResponse.json({message:"Product are not fetch failed"},{status:500})
-   }
+    return NextResponse.json(
+      { productsAll, message: "All product fetch" },
+      { status: 200 },
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Product are not fetch failed" },
+      { status: 500 },
+    );
+  }
 }
