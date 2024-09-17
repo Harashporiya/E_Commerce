@@ -1,3 +1,4 @@
+import { ProductType } from "@/types/productTypes";
 import { api } from "./client";
 
 export const productAll = async () => {
@@ -49,7 +50,7 @@ export const deleteSingleProduct = async (id: string) => {
   return response;
 };
 
-export const updateProduct = async (id: string) => {
-  const response = await api.put(`/products/update/${id}`);
+export const updateProduct = async (id: string, productData: ProductType) => {
+  const response = await api.put(`/products/update/${id}`, productData);
   return response;
 };

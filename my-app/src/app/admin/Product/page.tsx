@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { MoreHorizontal } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -41,8 +41,11 @@ import { newProduct } from "@/store/productStore/productStore";
 
 const Dashboard = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
-  const { onOpen } = newProduct();
+  // const { onOpen } = newProduct();
   const [isDialogOpen, setDialogOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
+    null,
+  );
 
   useEffect(() => {
     const productFetchData = async () => {
@@ -65,16 +68,22 @@ const Dashboard = () => {
     }
   };
 
-  const upDateProductById = async (id: string) => {
+  const updateProductById = async (id: string) => {
     try {
-      const response = await updateProduct(id);
-      setProducts(products.filter((product) => product._id !== id));
+      await updateProduct(id, selectedProduct!);
+      setProducts(
+        products.map((product) =>
+          product._id === id ? selectedProduct! : product,
+        ),
+      );
+      setDialogOpen(false);
     } catch (error) {
       console.error("Error updating product:", error);
     }
   };
 
-  const handleEditClick = () => {
+  const handleEditClick = (product: ProductType) => {
+    setSelectedProduct(product);
     setDialogOpen(true);
   };
 
@@ -116,16 +125,14 @@ const Dashboard = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {products.map((product: ProductType) => (
+                      {products.map((product) => (
                         <TableRow key={product._id}>
                           <TableCell className="hidden w-[100px] sm:table-cell">
                             <Image
-                              src={`${product.image}`}
-                              alt=""
-                              width={0}
-                              height={0}
-                              sizes="100vw"
-                              style={{ width: "100%" }}
+                              src={product.image}
+                              alt={product.name}
+                              width={100}
+                              height={100}
                               className="aspect-square rounded-t-md object-cover shadow-lg hover:cursor-pointer"
                             />
                           </TableCell>
@@ -157,7 +164,9 @@ const Dashboard = () => {
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem onClick={handleEditClick}>
+                                <DropdownMenuItem
+                                  onClick={() => handleEditClick(product)}
+                                >
                                   Edit
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
@@ -179,82 +188,109 @@ const Dashboard = () => {
         </main>
       </div>
 
-      <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
-        <DialogTrigger asChild></DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] bg-black">
-          <DialogHeader>
-            <DialogTitle>Edit product</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input
-                id="name"
-                // value="Pedro Duarte"
-                placeholder="product name"
-                className="col-span-3"
-              />
+      {selectedProduct && (
+        <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+          <DialogTrigger asChild></DialogTrigger>
+          <DialogContent className="sm:max-w-[425px] bg-black">
+            <DialogHeader>
+              <DialogTitle>Edit product</DialogTitle>
+              <DialogDescription>
+                Make changes to the product here. Click save when you done.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  Name
+                </Label>
+                <Input
+                  id="name"
+                  value={selectedProduct.name}
+                  onChange={(e) =>
+                    setSelectedProduct({
+                      ...selectedProduct,
+                      name: e.target.value,
+                    })
+                  }
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="brandname" className="text-right">
+                  Brand name
+                </Label>
+                <Input
+                  id="brandname"
+                  value={selectedProduct.brandName}
+                  onChange={(e) =>
+                    setSelectedProduct({
+                      ...selectedProduct,
+                      brandName: e.target.value,
+                    })
+                  }
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="price" className="text-right">
+                  Price
+                </Label>
+                <Input
+                  id="price"
+                  value={selectedProduct.prise}
+                  onChange={(e) =>
+                    setSelectedProduct({
+                      ...selectedProduct,
+                      prise: e.target.value,
+                    })
+                  }
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="description" className="text-right">
+                  Description
+                </Label>
+                <Input
+                  id="description"
+                  value={selectedProduct.description}
+                  onChange={(e) =>
+                    setSelectedProduct({
+                      ...selectedProduct,
+                      description: e.target.value,
+                    })
+                  }
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="size" className="text-right">
+                  Size
+                </Label>
+                <Input
+                  id="size"
+                  value={selectedProduct.size}
+                  onChange={(e) =>
+                    setSelectedProduct({
+                      ...selectedProduct,
+                      size: e.target.value,
+                    })
+                  }
+                  className="col-span-3"
+                />
+              </div>
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="brandname" className="text-right">
-                Brand name
-              </Label>
-              <Input
-                id="brandname"
-                // value="@peduarte"
-                placeholder="brand name"
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="prise" className="text-right">
-                Price
-              </Label>
-              <Input
-                id="price"
-                // value="@peduarte"
-                placeholder="add price"
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="description" className="text-right">
-                Description
-              </Label>
-              <Input
-                id="description"
-                // value="@peduarte"
-                placeholder="add description"
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="size" className="text-right">
-                Size
-              </Label>
-              <Input
-                id="size"
-                // value="@peduarte"
-                placeholder="size"
-                className="col-span-3"
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              type="submit"
-              onClick={() => upDateProductById(product._id)}
-            >
-              Save changes
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            <DialogFooter>
+              <Button
+                type="submit"
+                onClick={() => updateProductById(selectedProduct._id)}
+              >
+                Save changes
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };
