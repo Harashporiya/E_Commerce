@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,15 +8,46 @@ import {
   MenubarContent,
   MenubarItem,
   MenubarMenu,
-  MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { Search, ShoppingCart, User } from "lucide-react";
+import { ProductType } from "@/types/productTypes";
+import { productAll } from "@/http/api";
 
 const HeaderPage = () => {
   const categories = ["Men", "Women", "Sports", "Electronic"];
-  const menuItems = ["New Arrivals", "Best Sellers", "Clearance", "View All"];
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const [menuItems, setMenuItems] = useState<{ [key: string]: string[] }>({
+    Men: [],
+    Women: [],
+    Sports: [],
+    Electronic: [],
+  });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await productAll();
+        setProducts(response.data.productsAll);
+        updateMenuItems(response.data.productsAll);
+      } catch (error) {
+        console.log("Error", error);
+      }
+    };
+    fetchData();
+  }, [products]);
+
+  const updateMenuItems = (products: ProductType[]) => {
+    const newMenuItems = { ...menuItems };
+    products.forEach((product) => {
+      if (product.option && categories.includes(product.option)) {
+        if (!newMenuItems[product.option].includes(product.name)) {
+          newMenuItems[product.option].push(product.name);
+        }
+      }
+    });
+    setMenuItems(newMenuItems);
+  };
   return (
     <header className="relative">
       <div className="bg-black bg-opacity-80 backdrop-blur-md absolute top-0 left-0 w-full z-10">
@@ -73,7 +105,7 @@ const HeaderPage = () => {
                     {category}
                   </MenubarTrigger>
                   <MenubarContent className="bg-black bg-opacity-90 backdrop-blur-md text-white">
-                    {menuItems.map((item) => (
+                    {menuItems[category].map((item) => (
                       <MenubarItem
                         key={item}
                         className="hover:bg-white hover:bg-opacity-20"
