@@ -9,6 +9,7 @@ const orderValidation = z.object({
   address: z.string({ message: "Order address is required" }),
   qty: z.number({ message: "Order quantity is required" }),
   phone: z.string({ message: "Phone number should be 10 digits" }).length(10),
+  size: z.enum(["S", "M", "L", "XL", "XXL"], { message: "Invalid size" }),
   userId: z.string({ message: "User ID is required" }),
   productId: z.string({ message: "Product ID is required" }),
 });
@@ -24,7 +25,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { address, qty, phone, userId, productId } = validation;
+    const { address, qty, phone, size, userId, productId } = validation;
 
     await connectToDataBase();
 
@@ -47,6 +48,7 @@ export async function POST(request: Request) {
       address,
       qty,
       phone,
+      size,
       userId,
       productId,
     });

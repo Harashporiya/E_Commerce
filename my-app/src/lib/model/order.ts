@@ -14,6 +14,10 @@ const orderSchema = new Schema(
       type: String,
       required: true,
     },
+    size: {
+      type: String,
+      enum: ["S", "M", "L", "XL", "XXL"],
+    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
