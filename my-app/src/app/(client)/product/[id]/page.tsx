@@ -11,7 +11,16 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import orderSchema from "@/lib/validators/orderSchema/order-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 const ProductId = () => {
   const [productId, setProductId] = useState<ProductType | null>(null);
 
@@ -39,7 +48,7 @@ const ProductId = () => {
       address: "",
       qty: 1,
       phone: "",
-
+      size: "S",
       productId: String(id),
     },
   });
@@ -77,6 +86,9 @@ const ProductId = () => {
                   </h1>
                   <p className="mt-4 text-2xl font-bold text-gray-900">
                     ${productId.prise}
+                  </p>
+                  <p className="mt-4 text-2xl font-bold text-gray-900">
+                    Dress for {productId.option}
                   </p>
                   <div className="mt-6">
                     <h2 className="text-lg font-semibold text-gray-900">
@@ -122,6 +134,26 @@ const ProductId = () => {
                         {errors.phone && (
                           <p className="text-red-600">{errors.phone.message}</p>
                         )}
+                      </div>
+                      <div>
+                        <Select {...register("size")}>
+                          <SelectTrigger className="w-[180px] border-2 border-black">
+                            <SelectValue
+                              placeholder="Select Size"
+                              className="text-black placeholder-black"
+                            />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Size Select</SelectLabel>
+                              <SelectItem value="S">S</SelectItem>
+                              <SelectItem value="M">M</SelectItem>
+                              <SelectItem value="L">L</SelectItem>
+                              <SelectItem value="XL">XL</SelectItem>
+                              <SelectItem value="XXL">XXL</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
                       </div>
                     </div>
                     <Button className="my-4 mx-2">Payment now</Button>
