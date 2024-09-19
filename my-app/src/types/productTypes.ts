@@ -9,3 +9,9 @@ export interface ProductType {
   createdAt: string;
   description: string;
 }
+export interface OrderType {
+  address: string;
+  phone: string;
+  qty: number;
+  productId: string;
+}

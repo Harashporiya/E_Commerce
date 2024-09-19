@@ -1,4 +1,4 @@
-import { ProductType } from "@/types/productTypes";
+import { OrderType, ProductType } from "@/types/productTypes";
 import { api } from "./client";
 
 export const productAll = async () => {
@@ -17,6 +17,12 @@ export const createProduct = async (data: FormData) => {
 
 export const ordersAll = async () => {
   const response = await api.get("/orders");
+  return response;
+};
+
+export const orderByIdProduct = async (data: OrderType) => {
+  const response = await api.post("/orders", data);
+  console.log(data);
   return response;
 };
 

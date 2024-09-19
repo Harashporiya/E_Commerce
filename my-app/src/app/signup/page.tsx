@@ -1,23 +1,23 @@
-'use client'
-import Link from "next/link"
-import toast, { Toaster } from "react-hot-toast"
-import { Button } from "@/components/ui/button"
+"use client";
+import Link from "next/link";
+import toast, { Toaster } from "react-hot-toast";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "@/components/ui/input-otp"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import SignupRoute from "../api/signup/route"
+} from "@/components/ui/input-otp";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import SignupRoute from "../api/signup/route";
 import {
   Dialog,
   DialogContent,
@@ -25,11 +25,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { useState } from "react"
+} from "@/components/ui/dialog";
+import { useState } from "react";
 
 const SignupForm = () => {
-  const [accountCreate, setAccountCreate] = useState(false)
+  const [accountCreate, setAccountCreate] = useState(false);
 
   const handleSubmit = async (formData: FormData) => {
     const error = await SignupRoute(formData);
@@ -113,17 +113,20 @@ const SignupForm = () => {
                 />
               </div>
 
-              <Button type="submit" className="w-full text-white bg-black border-[1px] font-sans">
+              <Button
+                type="submit"
+                className="w-full text-white bg-black border-[1px] font-sans"
+              >
                 Create Account
               </Button>
 
-
-              <Dialog open={accountCreate} onOpenChange={setAccountCreate} >
+              <Dialog open={accountCreate} onOpenChange={setAccountCreate}>
                 <DialogContent className="sm:max-w-[425px] bg-black">
                   <DialogHeader className="bg-black">
                     <DialogTitle>Email Verification Required</DialogTitle>
                     <DialogDescription>
-                      Your account has been created. Please check your email to verify your account.
+                      Your account has been created. Please check your email to
+                      verify your account.
                     </DialogDescription>
                     <InputOTP maxLength={6}>
                       <InputOTPGroup>

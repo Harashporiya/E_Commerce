@@ -3,10 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { SingleProduct } from "@/http/api";
+import { orderByIdProduct, SingleProduct } from "@/http/api";
 import { ProductType } from "@/types/productTypes";
 import HeaderPage from "./header";
 import FooterPage from "../../footer/page";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import orderSchema from "@/lib/validators/orderSchema/order-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const ProductId = () => {
   const [productId, setProductId] = useState<ProductType | null>(null);
@@ -25,6 +29,29 @@ const ProductId = () => {
     };
     fetchProductId();
   }, [id]);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<z.infer<typeof orderSchema>>({
+    resolver: zodResolver(orderSchema),
+    defaultValues: {
+      address: "",
+      qty: 1,
+      phone: "",
+
+      productId: String(id),
+    },
+  });
+
+  const orderTheProduct = async (data: z.infer<typeof orderSchema>) => {
+    try {
+      const response = await orderByIdProduct(data);
+      console.log("Order placed successfully", response.data);
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -59,6 +86,46 @@ const ProductId = () => {
                       {productId.description}
                     </p>
                   </div>
+                  <form onSubmit={handleSubmit(orderTheProduct)}>
+                    <div className="space-x-2 p-2 flex my-2 mx-0">
+                      <div>
+                        <Input
+                          type="text"
+                          placeholder="address"
+                          {...register("address")}
+                          className="text-black w-[200px] border-2 border-black focus:outline-none focus:ring-2 focus:ring-white"
+                        />
+                        {errors.address && (
+                          <p className="text-red-600">
+                            {errors.address.message}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <Input
+                          type="number"
+                          placeholder="quantity"
+                          {...register("qty", { valueAsNumber: true })}
+                          className="text-black w-[200px] border-2 border-black focus:outline-none focus:ring-2 focus:ring-white"
+                        />
+                        {errors.qty && (
+                          <p className="text-red-600">{errors.qty.message}</p>
+                        )}
+                      </div>
+                      <div>
+                        <Input
+                          type="text"
+                          placeholder="phone"
+                          {...register("phone")}
+                          className="text-black w-[200px] border-2 border-black focus:outline-none focus:ring-2 focus:ring-white"
+                        />
+                        {errors.phone && (
+                          <p className="text-red-600">{errors.phone.message}</p>
+                        )}
+                      </div>
+                    </div>
+                    <Button className="my-4 mx-2">Payment now</Button>
+                  </form>
                 </div>
               </div>
             </div>

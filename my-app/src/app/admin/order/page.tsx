@@ -95,7 +95,10 @@ const Dashboard = () => {
                           <TableCell>{order.productId.prise}$</TableCell>
                           <TableCell>{order.productId.size}</TableCell>
                           <TableCell>{order.productId.option}</TableCell>
-                          <TableCell>{`${order.userId.firstName} ${order.userId.lastName}`}</TableCell>
+                          <TableCell>
+                            {`${order.userId.firstName} ${order.userId.lastName}`}
+                          </TableCell>
+
                           <TableCell>{order.phone}</TableCell>
                           <TableCell>{order.address}</TableCell>
                           <TableCell>
