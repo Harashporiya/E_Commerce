@@ -2,7 +2,7 @@ import { OrderType, ProductType } from "@/types/productTypes";
 import { api } from "./client";
 
 export const productAll = async () => {
-  const response = await api.get("/products");
+  const response = await api.get("/products/getProducts");
   return response;
 };
 

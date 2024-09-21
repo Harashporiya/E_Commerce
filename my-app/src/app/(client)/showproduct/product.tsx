@@ -32,11 +32,13 @@ const ShowProduct = () => {
               key={item._id}
               className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105"
             >
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-64 object-cover"
-              />
+              <div className="group relative overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
               <div className="p-4">
                 <h2 className="text-xl font-semibold text-gray-800 mb-2">
                   {item.name}
