@@ -1,7 +1,7 @@
-import NextAuth, { AuthError } from "next-auth";
+import NextAuth, { AuthError, CredentialsSignin } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
+import bcrypt, { compare } from "bcryptjs";
 import { User } from "./lib/model/user";
 import { connectToDataBase } from "./lib/db/db";
 
@@ -24,25 +24,28 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         },
       },
       authorize: async (credentials) => {
+        const email = credentials.email as string;
+        const password = credentials.password as string;
         if (!credentials) {
-          throw new AuthError("No credentials provided");
+          throw new CredentialsSignin({ cause: "No credentials provided" });
         }
-        const { email, password } = credentials;
 
         if (!email || !password) {
-          throw new AuthError("Please provide both email and password");
+          throw new CredentialsSignin({
+            cause: "Please provide both email and password",
+          });
         }
 
         await connectToDataBase();
         const user = await User.findOne({ email }).select("+password");
 
         if (!user) {
-          throw new AuthError("Invalid email or password");
+          throw new CredentialsSignin({ cause: "Invalid email or password" });
         }
 
-        const isMatch = bcrypt.compare(password, user.password);
+        const isMatch = await compare(password, user.password);
         if (!isMatch) {
-          throw new AuthError("Invalid password");
+          throw new CredentialsSignin({ cause: "Invalid password" });
         }
 
         return {
@@ -79,7 +82,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           return true;
         } catch (error) {
           console.error("Error while creating user:", error);
-          throw new AuthError("Error while creating user");
+          throw new CredentialsSignin({ cause: "Error while creating user" });
         }
       }
       return true;
