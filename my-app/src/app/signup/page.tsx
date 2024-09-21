@@ -1,5 +1,7 @@
 "use client";
+import React, { useState } from "react";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,7 +28,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useState } from "react";
 
 const SignupForm = () => {
   const [accountCreate, setAccountCreate] = useState(false);
@@ -38,6 +39,14 @@ const SignupForm = () => {
     } else {
       toast.success("Account created successfully");
       setAccountCreate(true);
+    }
+  };
+
+  const handleGoogleSignUp = async () => {
+    try {
+      await signIn("google", { callbackUrl: "/" });
+    } catch (error) {
+      toast.error("Error signing up with Google");
     }
   };
 
@@ -120,35 +129,12 @@ const SignupForm = () => {
                 Create Account
               </Button>
 
-              <Dialog open={accountCreate} onOpenChange={setAccountCreate}>
-                <DialogContent className="sm:max-w-[425px] bg-black">
-                  <DialogHeader className="bg-black">
-                    <DialogTitle>Email Verification Required</DialogTitle>
-                    <DialogDescription>
-                      Your account has been created. Please check your email to
-                      verify your account.
-                    </DialogDescription>
-                    <InputOTP maxLength={6}>
-                      <InputOTPGroup>
-                        <InputOTPSlot index={0} />
-                        <InputOTPSlot index={1} />
-                        <InputOTPSlot index={2} />
-                      </InputOTPGroup>
-                      <InputOTPSeparator />
-                      <InputOTPGroup>
-                        <InputOTPSlot index={3} />
-                        <InputOTPSlot index={4} />
-                        <InputOTPSlot index={5} />
-                      </InputOTPGroup>
-                    </InputOTP>
-                  </DialogHeader>
-                  <DialogFooter>
-                    <Button>Verify email</Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-
-              <Button variant="outline" className="w-full text-white font-sans">
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full text-white font-sans"
+                onClick={handleGoogleSignUp}
+              >
                 Sign up with Google
               </Button>
             </div>
@@ -161,6 +147,33 @@ const SignupForm = () => {
           </div>
         </CardContent>
       </Card>
+      <Dialog open={accountCreate} onOpenChange={setAccountCreate}>
+        <DialogContent className="sm:max-w-[425px] bg-black">
+          <DialogHeader className="bg-black">
+            <DialogTitle>Email Verification Required</DialogTitle>
+            <DialogDescription>
+              Your account has been created. Please check your email to verify
+              your account.
+            </DialogDescription>
+            <InputOTP maxLength={6}>
+              <InputOTPGroup>
+                <InputOTPSlot index={0} />
+                <InputOTPSlot index={1} />
+                <InputOTPSlot index={2} />
+              </InputOTPGroup>
+              <InputOTPSeparator />
+              <InputOTPGroup>
+                <InputOTPSlot index={3} />
+                <InputOTPSlot index={4} />
+                <InputOTPSlot index={5} />
+              </InputOTPGroup>
+            </InputOTP>
+          </DialogHeader>
+          <DialogFooter>
+            <Button>Verify email</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       <Toaster />
     </div>
   );

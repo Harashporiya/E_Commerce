@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -59,7 +59,9 @@ const LoginForm = () => {
           <form onSubmit={handleSubmit}>
             <div className="grid gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="email" className="text-white font-sans">Email</Label>
+                <Label htmlFor="email" className="text-white font-sans">
+                  Email
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -70,12 +72,23 @@ const LoginForm = () => {
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password" className="text-white font-sans">Password</Label>
-                  <Link href="#" className="ml-auto inline-block text-sm underline">
+                  <Label htmlFor="password" className="text-white font-sans">
+                    Password
+                  </Label>
+                  <Link
+                    href="#"
+                    className="ml-auto inline-block text-sm underline"
+                  >
                     Forgot your password?
                   </Link>
                 </div>
-                <Input id="password" type="password" placeholder="............." className="flex h-10 w-full border-none bg-[#27272a] text-white font-sans" name="password" />
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="............."
+                  className="flex h-10 w-full border-none bg-[#27272a] text-white font-sans"
+                  name="password"
+                />
               </div>
               <Button type="submit" className="w-full">
                 Login
@@ -85,7 +98,6 @@ const LoginForm = () => {
                 variant="outline"
                 className="w-full text-white"
                 onClick={handleGoogleSignIn}
-                
               >
                 Login with Google
               </Button>
