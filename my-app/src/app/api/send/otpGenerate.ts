@@ -4,6 +4,7 @@ import EmailSchema from "@/lib/validators/emailSchema";
 import { NextResponse } from "next/server";
 import Verifyed from "@/lib/model/send";
 import { z } from "zod";
+
 type EmailType = z.infer<typeof EmailSchema>;
 
 const resend = new Resend(process.env.RESEND_API_KEY);

@@ -2,7 +2,7 @@ import { OrderType, ProductType } from "@/types/productTypes";
 import { api } from "./client";
 
 export const productAll = async () => {
-  const response = await api.get("/products/getProducts");
+  const response = await api.get("/products");
   return response;
 };
 
@@ -58,5 +58,10 @@ export const deleteSingleProduct = async (id: string) => {
 
 export const updateProduct = async (id: string, productData: ProductType) => {
   const response = await api.put(`/products/update/${id}`, productData);
+  return response;
+};
+
+export const userProfile = async (id: string) => {
+  const response = await api.get(`signup/profile/${id}`);
   return response;
 };

@@ -33,6 +33,7 @@ const ShowProduct = () => {
               className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105"
             >
               <div className="group relative overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
+                {" "}
                 <img
                   src={item.image}
                   alt={item.name}

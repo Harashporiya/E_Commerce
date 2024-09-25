@@ -32,7 +32,7 @@ const Deshboard = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-2">
           {product.map((item: ProductType) => (
             <div
-              key={item.id}
+              key={item._id}
               className="flex flex-col items-center bg-white shadow-lg p-2"
             >
               <Image

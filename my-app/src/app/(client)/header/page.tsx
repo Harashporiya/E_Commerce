@@ -13,6 +13,7 @@ import {
 import { Search, ShoppingCart, User } from "lucide-react";
 import { ProductType } from "@/types/productTypes";
 import { productAll } from "@/http/api";
+import { useParams } from "next/navigation";
 
 const HeaderPage = () => {
   const categories = ["Men", "Women", "Sports", "Electronic"];
@@ -23,6 +24,8 @@ const HeaderPage = () => {
     Sports: [],
     Electronic: [],
   });
+  const params = useParams();
+  const id = params.id;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,7 +85,7 @@ const HeaderPage = () => {
                   <ShoppingCart size={20} />
                 </Button>
               </Link>
-              <Link href="/signin">
+              <Link href={`profile/${id}`}>
                 <Button
                   variant="ghost"
                   className="text-white hover:bg-white hover:bg-opacity-20"
